@@ -7,15 +7,18 @@ def load_csv(file_name):
     the data for each player
     """
 
-    data = ([],[])
+    data = {'labels':{},'data':[]}
 
     with open(file_name, 'rb') as csvfile:
 
-        csv_reader = list(csv.reader(csvfile))]
+        csv_reader = list(csv.reader(csvfile))
 
-        data[0].append(csv_reader[0])
+        count = 0
+        for label in csv_reader[0]:
+            data['labels'][label] = count
+            count += 1
 
         for d in csv_reader[1:]:
-            data[1].append(d)
+            data['data'].append(d)
 
         return data
