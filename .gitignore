@@ -1,3 +1,5 @@
 *.png
 creds.json
 *.csv
+*.pyc
+app/node_modules/*
