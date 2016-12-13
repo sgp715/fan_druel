@@ -1,7 +1,7 @@
 import dispatcher from "../dispatcher.js";
 
-export function toggleGenerate() {
+export function createTeam() {
     dispatcher.dispatch({
-        type: "TOGGLE_GENERATE"
+        type: "CREATE_TEAM"
     })
 }

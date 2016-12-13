@@ -6,7 +6,7 @@ import json
 
 class bestTeam(object):
 
-    def on_get(self, req, resp):
+    def on_post(self, req, resp):
 
         resp.status = falcon.HTTP_200
 
