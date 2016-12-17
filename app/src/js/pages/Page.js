@@ -1,12 +1,10 @@
 import React from "react";
 
-// import generateStore from "../stores/Generate.js";
 import teamsStore from "../stores/Team.js";
-//import fileStore from "../stores/File.js";
+import fileStore from "../stores/File.js";
 
-// import * as generateActions from "../actions/GenerateActions.js";
 import * as teamActions from "../actions/TeamActions.js";
-// import * as fileActions from "../actions/FileActions.js";
+import * as fileActions from "../actions/FileActions.js";
 
 export default class Page extends React.Component {
 
@@ -14,8 +12,7 @@ export default class Page extends React.Component {
         super();
         this.state = {
                        team: teamsStore.getAll(),
-                       file: '',
-                       newFile: false
+                       file: fileStore.getAll(),
                      };
     }
 
@@ -25,10 +22,9 @@ export default class Page extends React.Component {
             this.setState({team: teamsStore.getAll()});
         })
 
-        // fileStore.on("change", () => {
-        //     this.setState({file: fileStore.getFile()});
-        //     this.setState({newFile: fileStore.getNewFile()});
-        // })
+        fileStore.on("change", () => {
+            this.setState({file: fileStore.getAll()})
+        })
     }
 
     getTeam() {
@@ -70,9 +66,11 @@ export default class Page extends React.Component {
 
     handleClick(){
 
-        if (this.state.newFile) {
+        if (this.state.file) {
+
+            console.log("New file calculating team");
+
             teamActions.createTeam();
-            // send the file data :O
             var reader = new FileReader();
 
             reader.onload = (event) => {
@@ -96,8 +94,9 @@ export default class Page extends React.Component {
 
             var data = reader.readAsText(this.state.file);
 
-            this.setState({newFile: false});
-
+            fileActions.updateFile(null);
+        } else {
+            console.log("Not a new file");
         }
 
     }
@@ -109,8 +108,12 @@ export default class Page extends React.Component {
         var numberFiles = x.files.length;
 
         if (numberFiles == 1){
+
+            console.log("File updating");
+
             var file = x.files[0];
-            this.setState({file: file, newFile: true});
+            fileActions.updateFile(file);
+            console.log(file);
         } else if (numberFiles > 1) {
             console.log("Only taking one file at time");
         }

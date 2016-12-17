@@ -3,3 +3,4 @@ creds.json
 *.csv
 *.pyc
 app/node_modules/*
+*.log

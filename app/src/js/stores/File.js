@@ -2,53 +2,36 @@ import { EventEmitter } from "events";
 
 import dispatcher from "../dispatcher.js";
 
-import localStorage from "localStorage";
+// import localStorage from "localStorage";
 
 class FileStore extends EventEmitter {
 
     constructor() {
         super();
-        this.store = { file: null, newFile: false };
+        this.store = { file: null };
     }
 
     getAll() {
-        return this.store;
-    }
-
-    getFile() {
         return this.store.file;
     }
 
-    getNewFile() {
-        return this.store.newFile;
-    }
+    updateFile(file) {
 
-    updateNew() {
-        console.log("updating");
-        if (this.store.newFile == false) {
-            this.store.newFile = true;
-        } else {
-            this.store.newFile = false;
+        if (this.store.file == null) {
+            this.store.file = file;
         }
-        this.emit("change");
-    }
-
-    storeFile(file) {
-        this.store.file = file;
+        else {
+            this.store.file = null;
+        }
         this.emit("change");
     }
 
     handleAction(action) {
         switch(action.type) {
-            case "STORE_FILE": {
-                this.storeFile(action.file);
+            case "UPDATE_FILE": {
+                this.updateFile(action.file);
                 break;
             }
-            case "UPDATE_NEW": {
-                this.updateNew();
-                break;
-            }
-
         }
     }
 

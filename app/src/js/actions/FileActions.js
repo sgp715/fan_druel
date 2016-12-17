@@ -1,14 +1,8 @@
 import dispatcher from "../dispatcher.js";
 
-export function storeFile(file) {
+export function updateFile(file) {
     dispatcher.dispatch({
-        type: "STORE_FILE",
+        type: "UPDATE_FILE",
         file: file
-    });
-}
-
-export function updateNew() {
-    dispatcher.dispatch({
-        type: "UPDATE_NEW"
     });
 }
