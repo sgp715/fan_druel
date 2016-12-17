@@ -29,23 +29,25 @@ class Tests(unittest.TestCase):
         min_i = nba._min_index(list)
         self.assertEqual(9, min_i)
 
-    def test__top_ten(self):
+    def test__top_n(self):
 
+
+        n = 10
         players = [ ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'], ['0'],
                  ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1']]
-        expected_top_ten = [['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1']]
-        top_ten  = nba._top_ten(players, 0)
-        self.assertListEqual(expected_top_ten, top_ten)
+        expected_top_n = [['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1'], ['1']]
+        top_ten  = nba._top_n(n, players, 0)
+        self.assertListEqual(expected_top_n, top_ten)
 
         players = [ ['0'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9'], ['10']]
-        expected_top_ten = [ ['10'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9']]
-        top_ten  = nba._top_ten(players, 0)
-        self.assertListEqual(expected_top_ten, top_ten)
+        expected_top_n = [ ['10'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9']]
+        top_ten  = nba._top_n(n, players, 0)
+        self.assertListEqual(expected_top_n, top_ten)
 
         players = [ ['5'], ['1'], ['2'], ['3'], ['4'], ['0'], ['6'], ['7'], ['8'], ['9'], ['10'], ['11']]
-        expected_top_ten = [ ['5'], ['11'], ['2'], ['3'], ['4'], ['10'], ['6'], ['7'], ['8'], ['9']]
-        top_ten  = nba._top_ten(players, 0)
-        self.assertListEqual(expected_top_ten, top_ten)
+        expected_top_n = [ ['5'], ['11'], ['2'], ['3'], ['4'], ['10'], ['6'], ['7'], ['8'], ['9']]
+        top_ten  = nba._top_n(n, players, 0)
+        self.assertListEqual(expected_top_n, top_ten)
 
     # def test_possible_positions(self):
     #     data = nba.load_nba_data('./tests/player_list.csv')
@@ -103,6 +105,30 @@ class Tests(unittest.TestCase):
     #     expected_teams = [[pgt0, sgt1, sft0, pft1, ct0]]
     #     actual_teams = nba.possible_teams(smaller_data)
     #     self.assertListEqual(expected_teams, actual_teams)
+
+    def test_just_teams(self):
+
+        team = [['17328-15996', 'PG', 'Jerian', '', 'Grant', '8.864705702837776', '17', '3500', 'MIL@CHI', 'CHI', 'MIL', '', '', '', ''],
+                ['17328-58490', 'PG', 'Wade', '', 'Baldwin IV', '9.33499984741211', '20', '3500', 'SAC@MEM', 'MEM', 'SAC', '', '', '', ''],
+                ['17328-58661', 'SG', 'Rashad', '', 'Vaughn', '7.325000127156575', '12', '3500', 'MIL@CHI', 'MIL', 'CHI', '', '', '', ''],
+                ['17328-23097', 'SG', 'Tomas', '', 'Satoransky', '9.799999660915798', '18', '3500', 'DET@WAS', 'WAS', 'DET', '', '', '', ''],
+                ['17328-67026', 'SF', 'Jaylen', '', 'Brown', '9.84', '25', '3500', 'CHA@BOS', 'BOS', 'CHA', '', '', '', ''],
+                ['17328-23798', 'SF', 'Caris', '', 'LeVert', '9.800000190734863', '4', '3500', 'BKN@ORL', 'BKN', 'ORL', '', '', '', ''],
+                ['17328-23920', 'PF', 'Anthony', '', 'Bennett', '9.982352761661305', '17', '3500', 'BKN@ORL', 'BKN', 'ORL', '', '', '', ''],
+                ['17328-23823', 'PF', 'Willie', '', 'Cauley-Stein', '9.619047619047619', '21', '3900', 'SAC@MEM', 'SAC', 'MEM', '', '', '', ''],
+                ['17328-12362', 'C', 'DeMarcus', '', 'Cousins', '49.37916564941406', '24', '11000', 'SAC@MEM', 'SAC', 'MEM', '', '', '', '']]
+
+        names = ['Jerian Grant',
+                 'Wade Baldwin IV',
+                 'Rashad Vaughn',
+                 'Tomas Satoransky',
+                 'Jaylen Brown',
+                 'Caris LeVert',
+                 'Anthony Bennett',
+                 'Willie Cauley-Stein',
+                 'DeMarcus Cousins']
+        actual = nba.just_names(2, 4, team)
+        self.assertListEqual(names, actual)
 
 if __name__ == '__main__':
 

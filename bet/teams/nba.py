@@ -1,6 +1,5 @@
 from utils import load
 from itertools import combinations
-#import numpy as np
 
 def _min_index(list):
 
@@ -17,11 +16,11 @@ def _min_index(list):
 
     return min_i
 
-def _top_ten(players, index):
+def _top_n(n, players, index):
 
     top = []
     vals = []
-    for p in players[0:10]:
+    for p in players[0:n]:
 
         val = p[index]
         vals.append(val)
@@ -31,7 +30,7 @@ def _top_ten(players, index):
     min_i = _min_index(vals)
     min_val = vals[min_i]
 
-    for p in players[10:]:
+    for p in players[n:]:
 
         val = p[index]
 
@@ -64,11 +63,12 @@ def load_nba_data(file_name):
         else:
             players[p[position_index]] = [p]
 
-    players['PG'] = _top_ten(players['PG'], fppg_index)
-    players['SG'] = _top_ten(players['SG'], fppg_index)
-    players['SF'] = _top_ten(players['SF'], fppg_index)
-    players['PF'] = _top_ten(players['PF'], fppg_index)
-    players['C'] = _top_ten(players['C'], fppg_index)
+    n = 7
+    players['PG'] = _top_n(n, players['PG'], fppg_index)
+    players['SG'] = _top_n(n, players['SG'], fppg_index)
+    players['SF'] = _top_n(n, players['SF'], fppg_index)
+    players['PF'] = _top_n(n, players['PF'], fppg_index)
+    players['C'] = _top_n(n, players['C'], fppg_index)
 
     return {'labels':data['labels'], 'data': players}
 
@@ -163,3 +163,27 @@ def possible_teams(data):
                         count += 1
 
     return best_team
+
+def just_names(first, last, team):
+
+    names = []
+    for p in team:
+        name = (p[first] + ' ' + p[last])
+        names.append(name)
+
+    return names
+
+def best_team(file_name):
+
+    data = load_nba_data(file_name)
+    team = possible_teams(data)
+    return team
+
+
+if __name__ == "__main__":
+
+    file_name = raw_input('File with csv data: ')
+    best_team = best_team(file_name)
+    first_name = 2
+    last_name = 4
+    print just_names(first_name, last_name, best_team)
