@@ -2,9 +2,6 @@
   "name": "FanDruel",
   "version": "1.0.0",
   "main": "main.js",
-  "devDependencies": {
-    "electron-prebuilt": "^1.4.11"
-  },
   "dependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.9",
@@ -25,6 +22,6 @@
   },
   "scripts": {
     "start": "electron .",
-    "dev": "webpack-dev-server --content-base src --inline --hot"
+    "dev": "webpack-dev-server --content-base static --inline --hot"
   }
 }

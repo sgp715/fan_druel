@@ -78,7 +78,7 @@ export default class Page extends React.Component {
                 var data = event.target.result;
                 // console.log(data);
                 // TODO: get the from env
-                var teamEndpoint = 'http://localhost:8000/bestTeam';
+                var teamEndpoint = window.location + 'bestTeam';
                 fetch(teamEndpoint, {
                   method: 'POST',
                   headers: {
