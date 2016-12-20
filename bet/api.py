@@ -2,9 +2,16 @@ import falcon
 from wsgiref import simple_server
 from teams import nba
 import json
+import csv
 
 
 class bestTeam(object):
+
+    def on_options(self, req, resp):
+
+        resp.status = falcon.HTTP_200
+        resp.set_header("Access-Control-Allow-Origin","*")
+        resp.set_header("Access-Control-Allow-Headers","X-Requested-With,content-type,Access-Control-Allow-Origin")
 
     def on_post(self, req, resp):
 
@@ -15,9 +22,22 @@ class bestTeam(object):
                     if not chunk:
                         break
                     data += chunk
-                    print data
-            dummy_team = {"team": [['17328-15996', 'PG', 'Jerian', '', 'Grant', '8.864705702837776', '17', '3500', 'MIL@CHI', 'CHI', 'MIL', '', '', '', ''], ['17328-58490', 'PG', 'Wade', '', 'Baldwin IV', '9.33499984741211', '20', '3500', 'SAC@MEM', 'MEM', 'SAC', '', '', '', ''], ['17328-58661', 'SG', 'Rashad', '', 'Vaughn', '7.325000127156575', '12', '3500', 'MIL@CHI', 'MIL', 'CHI', '', '', '', ''], ['17328-23097', 'SG', 'Tomas', '', 'Satoransky', '9.799999660915798', '18', '3500', 'DET@WAS', 'WAS', 'DET', '', '', '', ''], ['17328-67026', 'SF', 'Jaylen', '', 'Brown', '9.84', '25', '3500', 'CHA@BOS', 'BOS', 'CHA', '', '', '', ''], ['17328-23798', 'SF', 'Caris', '', 'LeVert', '9.800000190734863', '4', '3500', 'BKN@ORL', 'BKN', 'ORL', '', '', '', ''], ['17328-23920', 'PF', 'Anthony', '', 'Bennett', '9.982352761661305', '17', '3500', 'BKN@ORL', 'BKN', 'ORL', '', '', '', ''], ['17328-23823', 'PF', 'Willie', '', 'Cauley-Stein', '9.619047619047619', '21', '3900', 'SAC@MEM', 'SAC', 'MEM', '', '', '', ''], ['17328-12362', 'C', 'DeMarcus', '', 'Cousins', '49.37916564941406', '24', '11000', 'SAC@MEM', 'SAC', 'MEM', '', '', '', '']] }
+            csvfile = json.loads(data)['file']
+            players = csvfile.split('\n')
+            p_n_s = []
+
+            for p in players[1:]:
+                player = p.split(",")
+                name = player[2].strip('"') + ' ' + player[4].strip('"')
+                salary = player[7].strip('"')
+                p_n_s.append((name, salary))
+
+            # generate team
+
             resp.status = falcon.HTTP_200
+            resp.set_header("Content-Type", "application/json")
+            resp.set_header("Access-Control-Allow-Origin","*")
+            dummy_team = {"team": ["Just Me", "And you"] }
             resp.body = json.dumps(dummy_team)
         except:
             resp.status = falcon.HTTP_400

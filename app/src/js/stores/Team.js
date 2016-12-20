@@ -20,17 +20,9 @@ class TeamStore extends EventEmitter {
         return this.store.team;
     }
 
-    createTeam() {
+    createTeam(team) {
 
-        this.store = {team: ["Steph Curry",
-                      "Anthony Davis",
-                      "Kanye West",
-                      "Darius Ruckers",
-                      "Bill Nye",
-                      "Max Perez",
-                      "Carmelo Anthony",
-                      "Anthony Montemayor",
-                      "Jim George"] };
+        this.store = {team: team};
         this.emit("change");
         this.store = localStorage.setItem('team', JSON.stringify(this.store));
 
@@ -40,7 +32,9 @@ class TeamStore extends EventEmitter {
     handleAction(action) {
         switch(action.type) {
             case "CREATE_TEAM": {
-                this.createTeam();
+                console.log("Action");
+                console.log(action.team);
+                this.createTeam(action.team);
             }
         }
     }

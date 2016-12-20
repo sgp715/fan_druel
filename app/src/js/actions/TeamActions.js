@@ -1,7 +1,8 @@
 import dispatcher from "../dispatcher.js";
 
-export function createTeam() {
+export function createTeam(team) {
     dispatcher.dispatch({
-        type: "CREATE_TEAM"
+        type: "CREATE_TEAM",
+        team: team
     })
 }

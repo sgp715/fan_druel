@@ -70,21 +70,27 @@ export default class Page extends React.Component {
 
             console.log("New file calculating team");
 
-            teamActions.createTeam();
+            //d
             var reader = new FileReader();
 
             reader.onload = (event) => {
 
                 var data = event.target.result;
+                // console.log(data);
+                // TODO: get the from env
                 var teamEndpoint = 'http://localhost:8000/bestTeam';
-                console.log("sending");
                 fetch(teamEndpoint, {
                   method: 'POST',
                   headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                   },
                   body: JSON.stringify({ file: data })
+                })
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    // console.log(responseJson.team);
+                    teamActions.createTeam(responseJson.team);
                 })
 
             };
@@ -123,18 +129,19 @@ export default class Page extends React.Component {
     render(){
         return (
             <div class="container-fluid">
-                <div class="well">
+                <div class="panel text-center">
                     <h1> FanDruel </h1>
-                    <p> FanDruel takes in a CSV file for an NBA competition and uses machine learning
-                    to pick the best team for your fantasy competition.</p>
+                    <p> FanDruel takes the CSV file that you can download off of a competition page on FanDuel.
+                    It then sends the file to a background process that uses our propietary algorithm to pick a badass team for you.
+                    </p>
                 </div>
                 <div class="panel">
-                    <h2>Choose CSV file for FanDuel competition: </h2>
+                    <h3>Choose CSV file for FanDuel competition: </h3>
                         <input type="file" onChange={this.handleFile.bind(this)} id="csvFile" />
-                    <h2>Generate Team</h2>
+                    <h3>Generate Team</h3>
                     <input type="button" class="btn btn-primary" onClick={this.handleClick.bind(this)} value="Go!" id="generate"/>
                 </div>
-                <h2>Best possible team to choose: </h2>
+                <h3>Best possible team to choose: </h3>
                 <table class="table">
                     <tbody>
                         {this.getTeam()}
