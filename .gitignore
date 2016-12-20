@@ -3,5 +3,6 @@ creds.json
 *.csv
 *.pyc
 app/node_modules/*
+app/node_modules/.bin
 *.log
 *.db
