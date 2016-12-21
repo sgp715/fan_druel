@@ -16,6 +16,9 @@ WORKDIR /src/
 RUN pip install -r requirements.txt
 
 
+ENV PROD True
+
+
 RUN npm install -g webpack
 WORKDIR /src/app/
 RUN npm install
