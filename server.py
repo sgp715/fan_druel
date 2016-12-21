@@ -12,8 +12,12 @@ def index():
 @app.route('/bestTeam', methods=['POST'])
 def best():
 
-    csvfile = request.get_json()
+    csvfile = request.get_json()['file']
+    print csvfile
+
     players = csvfile.split('\n')
+    print players
+
     p_n_s = []
 
     for p in players[1:]:
@@ -21,7 +25,7 @@ def best():
         name = player[2].strip('"') + ' ' + player[4].strip('"')
         salary = player[7].strip('"')
         p_n_s.append((name, salary))
-        
+
     if players:
         return json.dumps({"team": ["got it"]})
 
