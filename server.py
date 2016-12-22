@@ -52,7 +52,7 @@ def best():
         name = player[2].strip('"') + ' ' + player[4].strip('"')
         salary = player[7].strip('"')
         pos = player[1].strip('"')
-        p_n_s.append([name, salary, pos])
+        p_n_s.append([name, pos, salary])
 
     if players:
         return json.dumps({"team": ["got it"]})

@@ -11,7 +11,8 @@ conn = sqlite3.connect('database.db')
 data = (pd.read_sql('select * from stats', conn))
 data.dropna(inplace=True)
 
-X = np.array(data.drop(['Player','Pos','FDP'], axis=1))
+print data.head()
+X = np.array(data.drop(['index','Player','Pos','FDP'], axis=1))
 X = preprocessing.scale(X)
 y = np.array(data['FDP'])
 
