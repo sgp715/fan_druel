@@ -13,7 +13,7 @@ data.dropna(inplace=True)
 
 print data.head()
 X = np.array(data.drop(['index','Player','Pos','FDP'], axis=1))
-X = preprocessing.scale(X)
+#X = preprocessing.scale(X)
 y = np.array(data['FDP'])
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)

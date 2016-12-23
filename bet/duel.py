@@ -11,7 +11,7 @@ def teams(clf, players):
         return None
     df.dropna(inplace=True)
     X = np.array(df.drop(['Player', 'Salary', 'Pos'], axis=1))
-    X = preprocessing.scale(X)
+    # X = preprocessing.scale(X)
     df['PFDP'] = clf.predict(X)
 
     print df.head()
