@@ -79,6 +79,7 @@ export default class Page extends React.Component {
                 // console.log(data);
                 // TODO: get the from env
                 var teamEndpoint = window.location + 'bestTeam';
+                console.log("Sending to " + teamEndpoint);
                 fetch(teamEndpoint, {
                   method: 'POST',
                   headers: {
@@ -129,12 +130,9 @@ export default class Page extends React.Component {
     render(){
         return (
             <div class="container-fluid">
-                <div class="panel text-center">
-                    <h1> FanDruel </h1>
-                    <p> FanDruel takes the CSV file that you can download off of a competition page on FanDuel.
-                    It then sends the file to a background process that uses our propietary algorithm to pick a badass team for you.
-                    </p>
-                </div>
+                <nav class="navbar navbar-default">
+                    <div class="navbar-brand">FanDruel</div>
+                </nav>
                 <div class="panel">
                     <h3>Choose CSV file for FanDuel competition: </h3>
                         <input type="file" onChange={this.handleFile.bind(this)} id="csvFile" />
